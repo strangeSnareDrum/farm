@@ -1,0 +1,12 @@
+---
+# Checks and WarningsAsErrors should always match each other.
+Checks:           '-*,clang-diagnostic-*,clang-analyzer-*,bugprone*,cppcoreguidelines*, readability*,performance*,modernize*,misc*,-cppcoreguidelines-owning-memory,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-const-or-ref-data-members, -cppcoreguidelines-special-member-functions,-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers,-cppcoreguidelines-pro-type-vararg,-misc-include-cleaner,-modernize-use-nodiscard'
+WarningsAsErrors: '-*,clang-diagnostic-*,clang-analyzer-*,bugprone*,cppcoreguidelines*, readability*,performance*,modernize*,misc*,-cppcoreguidelines-owning-memory,-modernize-use-trailing-return-type,-cppcoreguidelines-avoid-const-or-ref-data-members, -cppcoreguidelines-special-member-functions,-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers,-cppcoreguidelines-pro-type-vararg,-misc-include-cleaner,-modernize-use-nodiscard'
+HeaderFileExtensions:
+  - h
+ImplementationFileExtensions:
+  - cpp
+FormatStyle:     Google
+SystemHeaders:   false
+...
+ 

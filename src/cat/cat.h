@@ -5,7 +5,7 @@
 class Cat {
    public:
     Cat(std::string name, int numLegs = 4);
-    void setNumLegs(const int numLegs);
+    void setNumLegs(int numLegs);
     int getNumLegs() const;
     std::string getName() const;
 

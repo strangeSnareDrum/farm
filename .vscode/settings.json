@@ -7,5 +7,5 @@
     "cmake.exportCompileCommandsFile": true,
     "editor.formatOnSave": true,
     "editor.inlayHints.enabled": "off",
-    "clang-format.executable": "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/Llvm/bin/clang-format.exe"
+    "clang-format.executable": "/usr/bin/clang-format"
 }

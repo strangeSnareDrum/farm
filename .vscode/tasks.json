@@ -3,100 +3,52 @@
   "tasks": [
     {
       "label": "Configure",
-      "type": "process",
-      "command": "cmd.exe",
-      "args": [
-        "/c",
-        "call",
-        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
-        "&&",
-        "cmake",
-        "-S",
-        ".",
-        "-B",
-        "build",
-        "-G",
-        "Ninja",
-        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-      ],
-      "group": {
-        "kind": "build"
-      }
+      "type": "shell",
+      "command": "cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+      "problemMatcher": [],
+      "group": "build"
     },
     {
       "label": "List cmake targets",
-      "type": "process",
-      "command": "cmd.exe",
-      "args": [
-        "/c",
-        "call",
-        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
-        "&&",
-        "cmake",
-        "--build",
-        "build",
-        "--target",
-        "help"
-      ],
-      "group": {
-        "kind": "build"
-      },
-      // "dependsOn": ["Configure"],
-      "problemMatcher": [
-        "$gcc"
-      ]
+      "type": "shell",
+      "command": "cmake --build build --target help",
+      "problemMatcher": [],
+      "group": "build"
     },
     {
-      "label": "Build target TremoloCoursePlugin_VST3",
-      "type": "process",
-      "command": "cmd.exe",
-      "args": [
-        "/c",
-        "call",
-        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
-        "&&",
-        "cmake",
-        "--build",
-        "build",
-        "--target",
-        "TremoloCoursePlugin_VST3"
-      ],
-      "group": {
-        "kind": "build"
-      },
-      // "dependsOn": ["Configure"],
-      "problemMatcher": [
-        "$gcc"
-      ]
-    },
-    {
-      "label": "Build target TremoloCoursePlugin_Standalone",
-      "type": "process",
-      "command": "cmd.exe",
-      "args": [
-        "/c",
-        "call",
-        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
-        "&&",
-        "cmake",
-        "--build",
-        "build",
-        "--target",
-        "TremoloCoursePlugin_Standalone"
-      ]
+      "label": "Build",
+      "type": "shell",
+      "command": "cmake --build build",
+      "problemMatcher": [],
+      "group": "build"
     },
     {
       "label": "Clean the build dir",
       "type": "shell",
-      "command": "Remove-Item",
-      "args": [
-        "-Recurse",
-        "-Force",
-        "build"
-      ],
-      "group": {
-        "kind": "build"
-      }
+      "command": "rm -rf build",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Check clang-format",
+      "type": "shell",
+      "command": "clang-format --dry-run --Werror $(git ls-files '*.cpp' '*.h')",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Perform clang-format",
+      "type": "shell",
+      "command": "clang-format --i --Werror $(git ls-files '*.cpp' '*.h')",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Check clang-tidy",
+      "type": "shell",
+      "command": "clang-tidy -p build $(git ls-files '*.cpp' '*.h')",
+      "problemMatcher": [],
+      "group": "build"
     }
   ]
 }
