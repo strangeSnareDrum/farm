@@ -1,0 +1,102 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Configure",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "call",
+        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
+        "&&",
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build",
+        "-G",
+        "Ninja",
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+      ],
+      "group": {
+        "kind": "build"
+      }
+    },
+    {
+      "label": "List cmake targets",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "call",
+        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
+        "&&",
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "help"
+      ],
+      "group": {
+        "kind": "build"
+      },
+      // "dependsOn": ["Configure"],
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "Build target TremoloCoursePlugin_VST3",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "call",
+        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
+        "&&",
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "TremoloCoursePlugin_VST3"
+      ],
+      "group": {
+        "kind": "build"
+      },
+      // "dependsOn": ["Configure"],
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "Build target TremoloCoursePlugin_Standalone",
+      "type": "process",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "call",
+        "%ProgramFiles%\\Microsoft Visual Studio\\18\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat",
+        "&&",
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "TremoloCoursePlugin_Standalone"
+      ]
+    },
+    {
+      "label": "Clean the build dir",
+      "type": "shell",
+      "command": "Remove-Item",
+      "args": [
+        "-Recurse",
+        "-Force",
+        "build"
+      ],
+      "group": {
+        "kind": "build"
+      }
+    }
+  ]
+}

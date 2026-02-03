@@ -1,0 +1,11 @@
+{
+    "cmake.clearOutputBeforeBuild": false,
+    "cmake.configureOnEdit": false,
+    "cmake.configureOnOpen": false,
+    "cmake.ctest.testExplorerIntegrationEnabled": false,
+    "cmake.enableAutomaticKitScan": false,
+    "cmake.exportCompileCommandsFile": true,
+    "editor.formatOnSave": true,
+    "editor.inlayHints.enabled": "off",
+    "clang-format.executable": "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/Llvm/bin/clang-format.exe"
+}

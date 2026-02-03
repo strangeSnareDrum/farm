@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Tremolo Standalone",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\build\\TremoloCoursePlugin_artefacts\\Debug\\Standalone\\chris-tremolo.exe",
+            // "program": "${workspaceFolder}\\build\\VstChremolo_artefacts\\Debug\\Standalone\\VstChremolo.exe",
+            // C:\christian\repos\VstChremolo\todo\build\VstChremolo_artefacts\Debug\Standalone
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Attach to JUCE plugin host",
+            "type": "cppvsdbg",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
