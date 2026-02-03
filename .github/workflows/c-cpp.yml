@@ -57,11 +57,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with: 
-        name: build-artifacts
-        path: build
+    - name: Configure (with sanitizers)
+      run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DBUILD_UNIT_TESTS=ON -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+
+    - name: Build tests
+      run: cmake --build build
 
     - name: Run unit tests
       run: ctest --test-dir build --output-on-failure
