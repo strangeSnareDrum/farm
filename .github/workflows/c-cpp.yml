@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: configure
+      run: cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_UNIT_TESTS=ON
+    - name: build
+      run: cmake --build build
+    - name: clang-tidy
+      run: clang-tidy -p build $(git ls-files '*.cpp' '*.h')
+    - name: clang-format
+      run: clang-format --dry-run -Werror $(git ls-files '*.cpp' '*.h')
