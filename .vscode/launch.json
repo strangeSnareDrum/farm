@@ -1,24 +1,38 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Tremolo Standalone",
-            "type": "cppvsdbg",
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\build\\TremoloCoursePlugin_artefacts\\Debug\\Standalone\\chris-tremolo.exe",
-            // "program": "${workspaceFolder}\\build\\VstChremolo_artefacts\\Debug\\Standalone\\VstChremolo.exe",
-            // C:\christian\repos\VstChremolo\todo\build\VstChremolo_artefacts\Debug\Standalone
+            "program": "${workspaceFolder}/${input:debugables}",
             "args": [],
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
             "environment": [],
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Attach to JUCE plugin host",
-            "type": "cppvsdbg",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
         }
+    ],
+    "inputs": [
+        {
+            "id": "debugables",
+            "type": "pickString",
+            "description": "Choose what to debug",
+            "options": [
+                "build/src/cat/test_prog_cat",
+                "build/farm"
+            ]
+        },
     ]
 }

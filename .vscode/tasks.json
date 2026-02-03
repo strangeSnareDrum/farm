@@ -2,9 +2,16 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Configure",
+      "label": "Configure release",
       "type": "shell",
-      "command": "cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+      "command": "cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Configure debug",
+      "type": "shell",
+      "command": "cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_UNIT_TESTS=ON",
       "problemMatcher": [],
       "group": "build"
     },
@@ -16,10 +23,23 @@
       "group": "build"
     },
     {
-      "label": "Build",
+      "label": "Build farm release",
       "type": "shell",
-      "command": "cmake --build build",
+      "command": "cmake --build build --target farm",
       "problemMatcher": [],
+      "dependsOn": [
+        "Configure release"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "Build unit tests",
+      "type": "shell",
+      "command": "cmake --build build --target all",
+      "problemMatcher": [],
+      "dependsOn": [
+        "Configure debug"
+      ],
       "group": "build"
     },
     {
@@ -48,7 +68,8 @@
       "type": "shell",
       "command": "clang-tidy -p build $(git ls-files '*.cpp' '*.h')",
       "problemMatcher": [],
-      "group": "build"
+      "group": "build",
+      "dependsOn": "Configure debug"
     }
   ]
 }
