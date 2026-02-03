@@ -7,17 +7,61 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: configure
+
+    - name: Configure (build compilation database)
       run: cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_UNIT_TESTS=ON
-    - name: build
-      run: cmake --build build
+
     - name: clang-tidy
       run: clang-tidy -p build $(git ls-files '*.cpp' '*.h')
+
     - name: clang-format
       run: clang-format --dry-run -Werror $(git ls-files '*.cpp' '*.h')
+
+    - name: Upload compilation database
+      uses: actions/upload-artifact@v4
+      with:
+        name: compile-commands
+        path: build/compile_commands.json
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download compile database
+      uses: actions/download-artifact@v4
+      with:
+        name: compile-commands
+        path: build
+
+    - name: Configure
+      run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
+
+    - name: build
+      run: cmake --build build
+
+    - name: Upload build
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: build
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with: 
+        name: build-artifacts
+        path: build
+
+    - name: Run unit tests
+      run: ctest --test-dir build --output-on-failure
